@@ -1,23 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PathSpawner : MonoBehaviour
 {
+    //array of paths
     public GameObject[] paths;
+    //how many paths on screen
     public int pathsOnScreen = 10;
+    //player protection distance
     public float playerProtection = 12.5f;
 
+    //player transform
     private Transform player;
+    //spawning path 
     private float spawnPathZ = -5f;
+    //length of the path
     private float pathLength = 10f;
+    //last path
     private int lastPath = 0;
-    private int RandomIndex;
+
+    //listing the gameobjects for the current paths
     private List<GameObject> currentPaths = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
+        //finding a tag with "player"
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         //making the paths spawn
@@ -31,6 +39,9 @@ public class PathSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //checking if the players position - the players protection is greater than the vale of 
+        //the spawn path of Z - how many paths are on screen * the length of the path.
+        //Then calling SpawnPath/DeletePath
         if(player.position.z - playerProtection > (spawnPathZ - pathsOnScreen * pathLength))
         {
             SpawnPath();
@@ -53,6 +64,9 @@ public class PathSpawner : MonoBehaviour
         currentPaths.Add(path);
     }
 
+    /// <summary>
+    /// destroying/removing the paths that is behind the player
+    /// </summary>
     void DeletePath()
     {
         Destroy(currentPaths[0]);

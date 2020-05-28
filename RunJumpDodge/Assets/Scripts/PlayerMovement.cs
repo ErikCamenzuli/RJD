@@ -1,20 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //vector3 for moveVelocity
     private Vector3 mV;
+    //referencing the player controller
     private CharacterController playerController;
-
+    //player speed
     public float playerSpeed = 6.0f;
-
+    //vertical jump velocity
     private float vertVelo = 15f;
+    //gravity
     private float gravity = 15f;
+    //players jump power
     private float jumpPower = 15f;
-
-
-    private Vector3 mD = Vector3.zero;
+    //is the player grounder? true/false
+    private bool isGrounded;
+    //setting a groundcheck
+    public Transform groundCheck;
+    //distance from the ground
+    public float groundDist = 0.4f;
+    //allowing access for the laymask to interact with code
+    public LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +33,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //calling function
         moveGravity();
     }
 
     void moveGravity()
     {
+        //creating a invisible sphere to check for the ground and checks the distance
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDist, mask);
+
         //resetting this every frame
         mV = Vector3.zero;
 
@@ -39,8 +50,9 @@ public class PlayerMovement : MonoBehaviour
         {
             //if the player isn't grounded then apply physics
             mV += Physics.gravity;
-            //checking if the player jumps
-            if(Input.GetKeyDown(KeyCode.Space))
+
+            //checking if the player jumps and is grounded
+            if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
             {
                 //setting the vertical velocity to the jump power
                 vertVelo = jumpPower;
@@ -76,9 +88,9 @@ public class PlayerMovement : MonoBehaviour
     /// changing the player speed
     /// </summary>
     /// <param name="increaseSpeed"></param>
-    public void IncreasedSpeed(float increaseSpeed)
+    public void IncreasedSpeed(int increaseSpeed)
     {
-        playerSpeed = 5.0f + increaseSpeed;
+        playerSpeed = 6.0f + increaseSpeed;
     }
 
 }

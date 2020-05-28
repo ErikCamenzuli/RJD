@@ -1,31 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreScript : MonoBehaviour
 {
+    //referencing the text inside unity
     public Text text;
+    public Text multiplier;
 
-    private float score = 0.0f;
-    private int difficulty = 1;
-    private int maxDifficulty = 10;
-    private int nextLevel = 10;
+    private float score = 0.0f;                 // - scoring
+    private int difficulty = 1;                 // - how hard a level is
+    private int maxDifficulty = 100;            // - max difficulty
+    private int nextLevel = 10;                 // - how much score is needed for next level 
 
     // Update is called once per frame
     void Update()
     {
+        //checking if the score is greater than the next level
+        //then calls the level
         if(score >= nextLevel)
         {
             Level();
         }
-
+        
+        //increasing score over time then multipling by whatever the difficulty level is
         score += Time.deltaTime * difficulty;
 
         //setting the text component to the score
         //initalizng score as a int value and convert the values after the . value of the float
         //to give a cleaner value
         text.text = ((int)score).ToString();
+        multiplier.text = "x " + (difficulty).ToString();
     }
 
     void Level()
@@ -42,9 +46,6 @@ public class ScoreScript : MonoBehaviour
 
         //calling the increased speed function from the player movement
         GetComponent<PlayerMovement>().IncreasedSpeed(difficulty);
-
-        Debug.Log(difficulty);
-
     }
 
 }
