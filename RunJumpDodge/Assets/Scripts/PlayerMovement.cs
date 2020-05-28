@@ -9,6 +9,12 @@ public class PlayerMovement : MonoBehaviour
 
     public float playerSpeed = 6.0f;
 
+    private float vertVelo = 15f;
+    private float gravity = 15f;
+    private float jumpPower = 15f;
+
+
+    private Vector3 mD = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +39,27 @@ public class PlayerMovement : MonoBehaviour
         {
             //if the player isn't grounded then apply physics
             mV += Physics.gravity;
+            //checking if the player jumps
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                //setting the vertical velocity to the jump power
+                vertVelo = jumpPower;
+            }
+            else
+            {
+                //taking gravity into account for the jump
+                vertVelo -= gravity * Time.deltaTime;
+            }
+            //setting the axis of the vertical velocity then moving it with time
+            Vector3 moveY = new Vector3(0, vertVelo, 0);
+            playerController.Move(moveY * Time.deltaTime);
+
         }
 
         ///x,y,z
         //Left and right
         mV.x = Input.GetAxisRaw("Horizontal") * playerSpeed;
+
 
         //gravity
         playerController.Move(mV * Time.deltaTime);
@@ -49,4 +71,14 @@ public class PlayerMovement : MonoBehaviour
         //making the player move fowards every second (not frame)
         playerController.Move((Vector3.forward * playerSpeed) * Time.deltaTime);
     }
+
+    /// <summary>
+    /// changing the player speed
+    /// </summary>
+    /// <param name="increaseSpeed"></param>
+    public void IncreasedSpeed(float increaseSpeed)
+    {
+        playerSpeed = 5.0f + increaseSpeed;
+    }
+
 }
