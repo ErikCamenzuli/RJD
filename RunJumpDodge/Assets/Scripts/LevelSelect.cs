@@ -11,4 +11,12 @@ public class LevelSelect : MonoBehaviour
     {
         SceneManager.LoadScene(level);
     }
+
+    /// <summary>
+    /// quits game
+    /// </summary>
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

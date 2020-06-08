@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PathStart
   - Ground
+  - Coin
   layers:
   - Default
   - TransparentFX

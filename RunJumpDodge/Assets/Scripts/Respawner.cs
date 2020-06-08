@@ -9,4 +9,5 @@ public class Respawner : MonoBehaviour
         //transform position point for respawning.
         SceneManager.LoadScene("Menu");
     }
+
 }
