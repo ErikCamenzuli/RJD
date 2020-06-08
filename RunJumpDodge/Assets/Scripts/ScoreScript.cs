@@ -6,7 +6,9 @@ public class ScoreScript : MonoBehaviour
     //referencing the text inside unity
     public Text text;
     public Text multiplier;
+    public Text tokenText;
 
+    private int tokens;
     private float score = 0.0f;                 // - scoring
     private int difficulty = 1;                 // - how hard a level is
     private int maxDifficulty = 100;            // - max difficulty
@@ -39,6 +41,13 @@ public class ScoreScript : MonoBehaviour
             return;
         }
         multiplier.text = "x " + (difficulty).ToString();
+
+        if(tokenText == null)
+        { 
+            return;
+        }
+        tokenText.text = "Tokens Collected: " + (tokens).ToString();
+
     }
 
     void Level()
@@ -64,6 +73,8 @@ public class ScoreScript : MonoBehaviour
         {
             //add points 
             score += 100;
+            //add tokens
+            tokens++;
             //destroys object
             Destroy(other.gameObject);
         }
