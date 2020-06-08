@@ -27,7 +27,7 @@ public class ScoreScript : MonoBehaviour
 
         //setting the text component to the score
         //initalizng score as a int value and convert the values after the . value of the float
-        //to give a cleaner value
+        //to give a cleaner value + doing error checks
         if (text == null)
         {
             return;
